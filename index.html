@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #0b1220;
-      --panel: #111a2e;
       --text: #e5e7eb;
       --muted: #94a3b8;
       --border: rgba(148,163,184,.18);
@@ -153,7 +152,7 @@
             </div>
           </div>
           <div style="margin-top:12px" class="small">
-            Notes: “School Type” is taken from 7-29-25 when present; otherwise 12-15-25.
+            Percentage display is rounded to whole numbers (e.g., 0.86 → 86%).
           </div>
         </div>
       </div>
@@ -203,11 +202,12 @@
       return Number.isFinite(v) ? v : null;
     }
 
+    // PATCH: show whole-number percents for columns beginning with "%"
     function fmt(x, colName) {
       if (x === null || x === undefined || x === "") return "";
       if (typeof x === "number") {
         if (String(colName).trim().startsWith("%")) {
-          return (x * 100).toFixed(1) + "%";
+          return Math.round(x * 100) + "%";
         }
         return x.toLocaleString(undefined, { maximumFractionDigits: 3 });
       }
